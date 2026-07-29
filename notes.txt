@@ -1,0 +1,6 @@
+npm start
+
+To do
+1. Fill up the md files.
+2. setup update from openapi
+3. something else again and again and again..
