@@ -1,0 +1,4 @@
+# ⚠️  NEVER commit cookies — they contain live session tokens
+# Output files — regenerated daily
+.obsidian
+
