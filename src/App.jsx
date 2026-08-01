@@ -1,15 +1,26 @@
-import { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom'
 import Home from './pages/Home'
 import ChapterDetail from './pages/ChapterDetail'
+import Footer from './components/Footer'
 import './App.css'
+
+function Layout() {
+  return (
+    <>
+      <Outlet />
+      <Footer />
+    </>
+  )
+}
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/trains/" element={<Home />} />
-        <Route path="/trains/chapters/:id" element={<ChapterDetail />} />
+        <Route element={<Layout />}>
+          <Route path="/trains/" element={<Home />} />
+          <Route path="/trains/chapters/:id" element={<ChapterDetail />} />
+        </Route>
       </Routes>
     </Router>
   )
