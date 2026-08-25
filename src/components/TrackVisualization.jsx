@@ -150,6 +150,7 @@ function DesktopTrackView({ chapters, otherChapters, highlightedStation, setHigh
                 className="other-chapter-icon-group"
                 style={{ cursor: 'pointer' }}
               >
+                <title>{chapter.title}</title>
                 {/* Icon background circle */}
                 <circle
                   cx={xPos}
@@ -207,6 +208,7 @@ function DesktopTrackView({ chapters, otherChapters, highlightedStation, setHigh
                 onMouseEnter={() => setHighlightedStation(chapter.id)}
                 onMouseLeave={() => setHighlightedStation(null)}
               >
+                <title>{chapter.title}</title>
                 {/* Title flag above or below */}
                 <g className="title-flag">
                   {showFlagAbove ? (
