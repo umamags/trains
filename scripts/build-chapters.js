@@ -5,6 +5,30 @@ const CHAPTERS_DIR = '.';
 const OUTPUT_DIR = 'public/data';
 const OUTPUT_FILE = path.join(OUTPUT_DIR, 'chapters.json');
 
+// Copy Appendix folder to public for deployment
+function copyDir(src, dest) {
+  if (!fs.existsSync(dest)) {
+    fs.mkdirSync(dest, { recursive: true });
+  }
+  const files = fs.readdirSync(src);
+  files.forEach(file => {
+    const srcPath = path.join(src, file);
+    const destPath = path.join(dest, file);
+    if (fs.statSync(srcPath).isDirectory()) {
+      copyDir(srcPath, destPath);
+    } else {
+      fs.copyFileSync(srcPath, destPath);
+    }
+  });
+}
+
+const APPENDIX_SRC = 'Appendix';
+const APPENDIX_DEST = 'public/Appendix';
+
+if (fs.existsSync(APPENDIX_SRC)) {
+  copyDir(APPENDIX_SRC, APPENDIX_DEST);
+}
+
 // Ensure output directory exists
 if (!fs.existsSync(OUTPUT_DIR)) {
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
@@ -53,3 +77,4 @@ const output = {
 fs.writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2));
 
 console.log(`✓ Generated ${OUTPUT_FILE} with ${chapters.length} chapters`);
+console.log(`✓ Copied Appendix folder to ${APPENDIX_DEST}`);

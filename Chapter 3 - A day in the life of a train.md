@@ -1,5 +1,7 @@
 # The Story of Indian Railways: One Journey on the Rajdhani Express
 
+![Behind the Scenes Train Operations](../Appendix/images/Behind_the_Scenes_Train_Operations.png)
+
 Let us follow **one train**.
 
 Let us follow a Rajdhani Express from the moment it wakes up in a maintenance yard to the moment its final passengers step onto the platform at its destination.

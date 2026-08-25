@@ -32,8 +32,8 @@ function DesktopTrackView({ chapters, highlightedStation, setHighlightedStation 
   })
 
   const trackImages = [
-    { src: '/trains/Appendix/images/train_tracks.jpeg', alt: 'Train tracks curving through landscape' },
-    { src: '/trains/Appendix/images/train-tracks-curving-through-a-forest-tunnel-v0-dmsq7q4kz2ah1.webp', alt: 'Train tracks through forest tunnel' }
+    { src: '/trains/Appendix/images/train-tracks-1.jpeg', alt: 'Train tracks curving through landscape' },
+    { src: '/trains/Appendix/images/train-tracks-2.webp', alt: 'Train tracks through forest tunnel' }
   ]
 
   return (
