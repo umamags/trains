@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import TrackVisualization from '../components/TrackVisualization'
 import './Home.css'
 
 function Home() {
   const [chapters, setChapters] = useState([])
   const [loading, setLoading] = useState(true)
+  const [highlightedStation, setHighlightedStation] = useState(null)
 
   useEffect(() => {
     fetch('/trains/data/chapters.json')
@@ -30,18 +32,11 @@ function Home() {
         <p className="subtitle">A journey through complex systems</p>
       </div>
 
-      <div className="chapters-grid">
-        {chapters.map(chapter => (
-          <Link to={`/trains/chapters/${chapter.id}`} key={chapter.id} className="chapter-card-link">
-            <div className="chapter-card">
-              <div className="chapter-number">Chapter {chapter.id}</div>
-              <h2>{chapter.title}</h2>
-              <p className="word-count">{chapter.wordCount} words</p>
-              <button className="read-btn">Read Chapter</button>
-            </div>
-          </Link>
-        ))}
-      </div>
+      <TrackVisualization
+        chapters={chapters}
+        highlightedStation={highlightedStation}
+        setHighlightedStation={setHighlightedStation}
+      />
 
       <div className="appendix-section">
         <h2>Appendix: Railway Map</h2>

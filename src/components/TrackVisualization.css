@@ -1,0 +1,199 @@
+.track-container {
+  width: 100%;
+  margin: 3rem 0;
+  padding: 2rem 0;
+  background: linear-gradient(to bottom, #e8f4f8 0%, #f0f8fa 100%);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.track-svg {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+}
+
+.station-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.station-group {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.station-marker {
+  transition: all 0.3s ease;
+}
+
+.station-number {
+  pointer-events: none;
+  user-select: none;
+}
+
+.title-flag {
+  pointer-events: none;
+}
+
+.flag-rect {
+  transition: stroke-width 0.2s ease, stroke 0.2s ease;
+}
+
+.flag-title {
+  user-select: none;
+  pointer-events: none;
+  transition: fill 0.2s ease;
+}
+
+/* Track Images Gallery */
+.track-images-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+  padding: 0 1rem;
+}
+
+.track-image-item {
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: #f0f0f0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.track-image-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.track-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: cover;
+}
+
+.tooltip-link {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Mobile view */
+.mobile-track-container {
+  margin: 3rem 0;
+}
+
+.mobile-track-intro {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.mobile-track-description {
+  font-size: 1rem;
+  color: #666;
+  font-style: italic;
+}
+
+.mobile-stations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.mobile-station-card {
+  text-decoration: none;
+  color: inherit;
+  border: 2px solid #0066cc;
+  border-radius: 12px;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile-station-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: #0066cc;
+  transition: width 0.3s ease;
+}
+
+.mobile-station-card:active {
+  border-color: #d63031;
+  background: linear-gradient(135deg, #ffe8e8 0%, #fff5f5 100%);
+}
+
+.mobile-station-card:active::before {
+  width: 8px;
+  background: #d63031;
+}
+
+.mobile-station-header {
+  position: relative;
+  z-index: 1;
+}
+
+.mobile-station-number {
+  font-size: 0.75rem;
+  color: #0066cc;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.mobile-station-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.mobile-station-meta {
+  font-size: 0.85rem;
+  color: #999;
+  position: relative;
+  z-index: 1;
+}
+
+.mobile-read-btn {
+  padding: 0.75rem 1.5rem;
+  background-color: #0066cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-top: 0.5rem;
+  position: relative;
+  z-index: 1;
+  align-self: flex-start;
+}
+
+.mobile-read-btn:active {
+  background-color: #0052a3;
+}
+
+@media (max-width: 768px) {
+  .track-container {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-track-container {
+    display: none;
+  }
+}
