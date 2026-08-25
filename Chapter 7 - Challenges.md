@@ -355,6 +355,8 @@ Automatic train protection
 Real-time monitoring
 ```
 
+![Railway Interlocking Safety Logic](../Appendix/images/Railway_Interlocking_Safety_Logic.png)
+
 Major technology areas:
 
 * electronic interlocking
