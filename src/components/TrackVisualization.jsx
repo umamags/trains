@@ -12,11 +12,19 @@ function TrackVisualization({ chapters, highlightedStation, setHighlightedStatio
     return () => window.removeEventListener('resize', checkMobile)
   }, [])
 
+  const mainChapters = chapters.filter(ch => ch.id <= 8)
+  const otherChapters = chapters.filter(ch => ch.id > 8)
+
   if (isMobile) {
     return <MobileTrackView chapters={chapters} />
   }
 
-  return <DesktopTrackView chapters={chapters} highlightedStation={highlightedStation} setHighlightedStation={setHighlightedStation} />
+  return (
+    <div className="track-visualization-wrapper">
+      <DesktopTrackView chapters={mainChapters} highlightedStation={highlightedStation} setHighlightedStation={setHighlightedStation} />
+      {otherChapters.length > 0 && <OtherChaptersRow chapters={otherChapters} />}
+    </div>
+  )
 }
 
 function DesktopTrackView({ chapters, highlightedStation, setHighlightedStation }) {
@@ -289,6 +297,32 @@ function MobileTrackView({ chapters }) {
             </div>
             <div className="mobile-station-meta">{chapter.wordCount} words</div>
             <button className="mobile-read-btn">Read Chapter</button>
+          </Link>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function OtherChaptersRow({ chapters }) {
+  const getIcon = (chapterId) => {
+    if (chapterId === 9) return '🚂'
+    if (chapterId === 10) return '👷'
+    return '📖'
+  }
+
+  return (
+    <div className="other-chapters-container">
+      <div className="other-chapters-row">
+        {chapters.map(chapter => (
+          <Link
+            key={chapter.id}
+            to={`/trains/chapters/${chapter.id}`}
+            className="other-chapter-card"
+          >
+            <div className="other-chapter-icon">{getIcon(chapter.id)}</div>
+            <div className="other-chapter-title">{chapter.title}</div>
+            <div className="other-chapter-meta">{chapter.wordCount} words</div>
           </Link>
         ))}
       </div>

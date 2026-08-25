@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const CHAPTERS_DIR = '.';
+const MAIN_CHAPTERS_DIR = 'src/main_chapters';
+const OTHER_CHAPTERS_DIR = 'src/other_chapters';
 const OUTPUT_DIR = 'public/data';
 const OUTPUT_FILE = path.join(OUTPUT_DIR, 'chapters.json');
 
@@ -34,47 +35,63 @@ if (!fs.existsSync(OUTPUT_DIR)) {
   fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 }
 
-// Find all Chapter *.md files
-const files = fs.readdirSync(CHAPTERS_DIR)
-  .filter(file => file.match(/^Chapter\s+\d+\s*-/i) && file.endsWith('.md'))
-  .sort((a, b) => {
-    const numA = parseInt(a.match(/\d+/)[0]);
-    const numB = parseInt(b.match(/\d+/)[0]);
-    return numA - numB;
-  });
+// Function to read chapters from a directory
+function readChaptersFromDir(dirPath, category) {
+  if (!fs.existsSync(dirPath)) {
+    return [];
+  }
 
-const chapters = files.map((file, index) => {
-  const filePath = path.join(CHAPTERS_DIR, file);
-  const content = fs.readFileSync(filePath, 'utf-8');
+  return fs.readdirSync(dirPath)
+    .filter(file => file.match(/^Chapter\s+\d+\s*-/i) && file.endsWith('.md'))
+    .map(file => {
+      const filePath = path.join(dirPath, file);
+      const content = fs.readFileSync(filePath, 'utf-8');
 
-  // Extract chapter number from filename
-  const chapterNum = parseInt(file.match(/\d+/)[0]);
+      // Extract chapter number from filename
+      const chapterNum = parseInt(file.match(/\d+/)[0]);
 
-  // Extract title from filename (remove "Chapter X - " prefix)
-  const title = file.replace(/^Chapter\s+\d+\s*-\s*/, '').replace(/\.md$/, '');
+      // Extract title from filename (remove "Chapter X - " prefix)
+      const title = file.replace(/^Chapter\s+\d+\s*-\s*/, '').replace(/\.md$/, '');
 
-  // Count words
-  const wordCount = content.trim().split(/\s+/).length;
+      // Count words
+      const wordCount = content.trim().split(/\s+/).length;
 
-  return {
-    id: chapterNum,
-    title: title,
-    filename: file,
-    content: content,
-    wordCount: wordCount,
+      return {
+        id: chapterNum,
+        title: title,
+        filename: file,
+        content: content,
+        wordCount: wordCount,
+        category: category
+      };
+    });
+}
+
+// Read chapters from both directories
+const mainChapters = readChaptersFromDir(MAIN_CHAPTERS_DIR, 'main');
+const otherChapters = readChaptersFromDir(OTHER_CHAPTERS_DIR, 'other');
+
+// Combine and sort all chapters
+const allChapters = [...mainChapters, ...otherChapters]
+  .sort((a, b) => a.id - b.id)
+  .map((chapter, index) => ({
+    ...chapter,
     order: index + 1
-  };
-});
+  }));
 
 // Create the output JSON
 const output = {
-  chapters: chapters,
+  chapters: allChapters,
+  mainChapters: mainChapters.sort((a, b) => a.id - b.id),
+  otherChapters: otherChapters.sort((a, b) => a.id - b.id),
   generatedAt: new Date().toISOString(),
-  totalChapters: chapters.length
+  totalChapters: allChapters.length
 };
 
 // Write to file
 fs.writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2));
 
-console.log(`✓ Generated ${OUTPUT_FILE} with ${chapters.length} chapters`);
+console.log(`✓ Generated ${OUTPUT_FILE} with ${allChapters.length} chapters`);
+console.log(`  - Main chapters (1-8): ${mainChapters.length}`);
+console.log(`  - Other chapters (9-10): ${otherChapters.length}`);
 console.log(`✓ Copied Appendix folder to ${APPENDIX_DEST}`);
