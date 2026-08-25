@@ -19,15 +19,10 @@ function TrackVisualization({ chapters, highlightedStation, setHighlightedStatio
     return <MobileTrackView chapters={chapters} />
   }
 
-  return (
-    <div className="track-visualization-wrapper">
-      <DesktopTrackView chapters={mainChapters} highlightedStation={highlightedStation} setHighlightedStation={setHighlightedStation} />
-      {otherChapters.length > 0 && <OtherChaptersRow chapters={otherChapters} />}
-    </div>
-  )
+  return <DesktopTrackView chapters={mainChapters} otherChapters={otherChapters} highlightedStation={highlightedStation} setHighlightedStation={setHighlightedStation} />
 }
 
-function DesktopTrackView({ chapters, highlightedStation, setHighlightedStation }) {
+function DesktopTrackView({ chapters, otherChapters, highlightedStation, setHighlightedStation }) {
   const svgWidth = 1200
   const svgHeight = 600
   const trackPath = `M 50 200 Q 300 100, 550 150 T 1100 250`
@@ -136,6 +131,63 @@ function DesktopTrackView({ chapters, highlightedStation, setHighlightedStation 
             )
           })}
         </g>
+
+        {/* Other Chapters Icons (Engines & Jobs) */}
+        {otherChapters && otherChapters.map((chapter, index) => {
+          const xPos = 200 + (index * 150)
+          const yPos = 50
+          const iconMap = { 9: '🚂', 10: '👷' }
+          const icon = iconMap[chapter.id] || '📖'
+
+          return (
+            <Link
+              key={`other-chapter-${chapter.id}`}
+              to={`/trains/chapters/${chapter.id}`}
+              className="other-chapter-svg-link"
+              style={{ pointerEvents: 'auto' }}
+            >
+              <g
+                className="other-chapter-icon-group"
+                style={{ cursor: 'pointer' }}
+              >
+                {/* Icon background circle */}
+                <circle
+                  cx={xPos}
+                  cy={yPos}
+                  r="24"
+                  fill="#ffffff"
+                  stroke="#0066cc"
+                  strokeWidth="2"
+                  filter="url(#shadow)"
+                  className="other-chapter-icon-bg"
+                  style={{ transition: 'all 0.3s ease' }}
+                />
+                {/* Icon text */}
+                <text
+                  x={xPos}
+                  y={yPos + 8}
+                  textAnchor="middle"
+                  fontSize="28"
+                  style={{ pointerEvents: 'none' }}
+                >
+                  {icon}
+                </text>
+                {/* Title below icon */}
+                <text
+                  x={xPos}
+                  y={yPos + 50}
+                  textAnchor="middle"
+                  fontSize="12"
+                  fontWeight="600"
+                  fill="#0066cc"
+                  style={{ pointerEvents: 'none' }}
+                >
+                  {chapter.title}
+                </text>
+              </g>
+            </Link>
+          )
+        })}
 
         {/* Stations */}
         {chapters.map((chapter, index) => {
@@ -297,32 +349,6 @@ function MobileTrackView({ chapters }) {
             </div>
             <div className="mobile-station-meta">{chapter.wordCount} words</div>
             <button className="mobile-read-btn">Read Chapter</button>
-          </Link>
-        ))}
-      </div>
-    </div>
-  )
-}
-
-function OtherChaptersRow({ chapters }) {
-  const getIcon = (chapterId) => {
-    if (chapterId === 9) return '🚂'
-    if (chapterId === 10) return '👷'
-    return '📖'
-  }
-
-  return (
-    <div className="other-chapters-container">
-      <div className="other-chapters-row">
-        {chapters.map(chapter => (
-          <Link
-            key={chapter.id}
-            to={`/trains/chapters/${chapter.id}`}
-            className="other-chapter-card"
-          >
-            <div className="other-chapter-icon">{getIcon(chapter.id)}</div>
-            <div className="other-chapter-title">{chapter.title}</div>
-            <div className="other-chapter-meta">{chapter.wordCount} words</div>
           </Link>
         ))}
       </div>
