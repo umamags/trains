@@ -135,7 +135,7 @@ function DesktopTrackView({ chapters, otherChapters, highlightedStation, setHigh
         {/* Other Chapters Icons (Engines & Jobs) */}
         {otherChapters && otherChapters.map((chapter, index) => {
           const xPos = 200 + (index * 150)
-          const yPos = 50
+          const yPos = svgHeight - 80
           const iconMap = { 9: '🚂', 10: '👷' }
           const icon = iconMap[chapter.id] || '📖'
 
@@ -266,7 +266,7 @@ function DesktopTrackView({ chapters, otherChapters, highlightedStation, setHigh
                     x={x}
                     y={showFlagAbove ? y - 60 : y + 72}
                     textAnchor="middle"
-                    fontSize="11"
+                    fontSize="13"
                     fontWeight="600"
                     fill={isHighlighted ? '#d63031' : '#0066cc'}
                     className="flag-title"
