@@ -2,19 +2,22 @@ export default function Footer() {
   return (
     <footer className="footer">
       <div className="footer-content">
-        <span>&copy; {new Date().getFullYear()} Mahesh Natarajan</span>
+        <p>&copy; {new Date().getFullYear()} <a href="https://ai-lab.in">Mahesh Natarajan</a></p>
         <nav className="footer-links">
-          <a href="/quiz-app/" target="_blank" rel="noopener noreferrer">
+          <a href="/quiz-app">
             Quiz App
           </a>
-          <a href="/trains/" target="_blank" rel="noopener noreferrer">
+          <a href="/trains">
             Trains
           </a>
-          <a href="/countries/" target="_blank" rel="noopener noreferrer">
+          <a href="/countries">
             Countries
           </a>
-          <a href="/temples/" target="_blank" rel="noopener noreferrer">
+          <a href="/temples">
             Temples
+          </a>
+          <a href="/education">
+            Education
           </a>
         </nav>
       </div>
